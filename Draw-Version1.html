@@ -31,26 +31,31 @@
                   fill: fill
                 };
               }
-            if(typeof options.left === 'undefined')
-              options.left = 10;
-            if(typeof options.top === 'undefined')
-              options.top = 10;
-            if(typeof options.width === 'undefined')
-              options.width = 100;
-            if(typeof options.height === 'undefined')
-              options.height = 100;
-            if(typeof options.fill === 'undefined')
-                options.fill = 'silver';
-            if(typeof options.stroke === 'undefined')
-              options.stroke = 'black';
+            if(options.clear)
+              canvas.height = canvas.height;
+            options.left = options.left || _KSM.drawOptions.left;
+            options.top = options.top || _KSM.drawOptions.top;
+            options.width = options.width || _KSM.drawOptions.width;
+            options.height = options.height || _KSM.drawOptions.height;
+            options.stroke = options.stroke || _KSM.drawOptions.stroke;
+            options.fill = options.fill || _KSM.drawOptions.fill;
+
             context.strokeStyle = options.stroke;
             context.fillStyle = options.fill;
             context.fillRect(options.left,options.top,options.width,options.height);
             context.strokeRect(options.left,options.top,options.width,options.height);
           }
+      },
+      drawOptions:
+      {
+        left: 10, top: 10, width: 100, height: 100, stroke: 'black',
+        fill: 'silver', clear: false
       }
     }
     //Legacy code
+    _KSM.drawOptions.stroke = '#44F';
+    _KSM.drawOptions.fill = '#FFE';
+    
     _KSM.draw();
     _KSM.draw(530,370);
     _KSM.draw(100,100,440,280);
@@ -60,8 +65,14 @@
     _KSM.draw(10,310,160,160,'red');
     //Problems with readability
     _KSM.draw(270,undefined,undefined,undefined,undefined,'green');
-    //Latest code
     _KSM.draw({stroke: 'red', left: 140, top: 450, height: 20, width: 360});
 
+    //Latest code
+    /*
+    _KSM.drawOptions.stroke = '#44F';
+    _KSM.drawOptions.fill = '#FFE';
+    _KSM.draw({clear: true});
+    _KSM.draw(530,370);
+    */
   </script>
 </html>
