@@ -12,16 +12,24 @@
   <script>
     _KSM =
     {
-      draw: function(left,top,width,height)
-      {
-        _KSM.drawNew(left,top,width,height,'black','silver');
-      },
-      drawNew: function(left,top,width, height, stroke, fill)
+      draw: function(left,top,width, height, stroke, fill)
       {
           var canvas = document.getElementById('theCanvas');
           if(canvas.getContext)
           {
             var context = canvas.getContext('2d');
+            if(typeof left === 'undefined')
+              left = 10;
+            if(typeof top === 'undefined')
+              top = 10;
+            if(typeof width === 'undefined')
+              width = 100;
+            if(typeof height === 'undefined')
+              height = 100;
+            if(typeof fill === 'undefined')
+                fill = 'silver';
+            if(typeof stroke === 'undefined')
+              stroke = 'black';
             context.strokeStyle = stroke;
             context.fillStyle = fill;
             context.fillRect(left,top,width,height);
@@ -34,6 +42,10 @@
     _KSM.draw(530,370);
     _KSM.draw(100,100,440,280);
     //Latest code
-    _KSM.drawNew(120,120,400,240,'burlywood','lemonchiffon');
+    _KSM.draw(120,120,400,240,'burlywood','lemonchiffon');
+    _KSM.draw(530,10,100,100,'red','teal');
+    _KSM.draw(10,310,160,160,'red');
+    _KSM.draw(270,undefined,undefined,undefined,undefined,'green');
+
   </script>
 </html>
