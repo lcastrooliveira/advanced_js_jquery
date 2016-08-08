@@ -24,30 +24,41 @@
   </body>
   <script>
     $(function() {
-        var showEventMessage = function(options) {
-          options = $.extend({
-            eventType: 'CLICK',
-            eventTarget: this,
-            suffix: '<br/>'
-          },options);
-          var message = options.eventType+':'+(options.eventTarget.nodeName || 'unknown') + options.suffix;
-          $('#Messages').append(message);
-        }//Perguntar pro paulo isso aqui
+        var showEventMessage = function(options)
+          {
+            options = $.extend({
+              eventType: 'CLICK',
+              eventTarget: this,
+              suffix: '<br/>'
+            },options);
+            var message = options.eventType+':'+(options.eventTarget.nodeName || 'unknown') + options.suffix;
+            $('#Messages').append(message);
+          },
+          namedHandler = function(event)
+          {
+            if(!event.isPropagationStopped() &&
+            !event.isImmediatePropagationStopped() &&
+            !event.isDefaultPrevented())
+            {
+              showEventMessage.call(this, {eventType: 'namedHandler'+ event.type});
+              event.stopPropagation();
+            }
+          };
         $('.clickable')
           .off('click')
-          .on('click dblclick mousedown',function(event) {
+          .on('click.demo dblclick.demo',namedHandler)
+          .on('click.demo dblclick.demo mousedown.demo',function(event) {
             if(!event.isPropagationStopped() &&
             !event.isImmediatePropagationStopped() &&
             !event.isDefaultPrevented())
             {
               showEventMessage.call(this, {eventType: event.type});
-              if(event.type == 'mousedown')
-                event.preventDefault();
               event.stopPropagation();
+              if(event.type === 'mousedown')
+                event.preventDefault();
             }
           })
-          .off('click mousedown')
-          .on('mousedown click',function(event) {
+          .on('mousedown.demo click.demo',function(event) {
             if(!event.isPropagationStopped() &&
             !event.isImmediatePropagationStopped() &&
             !event.isDefaultPrevented())
