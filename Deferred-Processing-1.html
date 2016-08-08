@@ -16,11 +16,20 @@
   <script>
     $(function() {
       $('#Load').click(function(event) {
-        $('#Section1').load('Content-1.html');
-        $('#Section2').load('Content-2.html');
-        $('#Section3').load('Content-3.html',function() {
+        $.when(
+          $.get('Content-1.html',function(result) {
+            $('#Section1').html(result);
+          },'html'),
+          $.get('Content-2.html',function(result) {
+            $('#Section2').html(result);
+          },'html'),
+          $.get('Content-3.html',function(result) {
+            $('#Section3').html(result);
+          },'html')
+        )
+        .then(function() {
           $('#Proceed').removeAttr('disabled');
-        });
+        })
       });
     });
   </script>
