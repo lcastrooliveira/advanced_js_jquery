@@ -10,13 +10,15 @@
     <div id="Section1"></div>
     <div id="Section2"></div>
     <div id="Section3"></div>
-    <input id="Proceed" type="button" value="proceed" disabled="true"></input>
+    <input id="Proceed" type="button" value="proceed" disabled="true"/>
     <div id="Messages"></div>
   </body>
   <script>
     $(function() {
       $('#Load').click(function(event) {
-        $('#Section1').load('Content-1.html',function() {
+        $('#Section1').load('Content-1.html');
+        $('#Section2').load('Content-2.html');
+        $('#Section3').load('Content-3.html',function() {
           $('#Proceed').removeAttr('disabled');
         });
       });
