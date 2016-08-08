@@ -45,26 +45,17 @@
             }
           };
         $('.clickable')
-          .off('click')
-          .on('click.demo dblclick.demo',namedHandler)
-          .on('click.demo dblclick.demo mousedown.demo',function(event) {
-            if(!event.isPropagationStopped() &&
-            !event.isImmediatePropagationStopped() &&
-            !event.isDefaultPrevented())
-            {
-              showEventMessage.call(this, {eventType: event.type});
-              event.stopPropagation();
-              if(event.type === 'mousedown')
-                event.preventDefault();
-            }
+          .on('click',function(event) {
+            var $this = $(this), clickCount = ($this.data('clickcount') || 0 ) + 1;
+            $this.data('clickcount',clickCount);
+            showEventMessage.call(this, {eventType: ''+clickCount + ')'+ event.type});
+            if(clickCount === 3)
+              $this.trigger('click3');
           })
-          .on('mousedown.demo click.demo',function(event) {
-            if(!event.isPropagationStopped() &&
-            !event.isImmediatePropagationStopped() &&
-            !event.isDefaultPrevented())
-            {
-              showEventMessage.call(this, {eventType: event.type, suffix: '#2<br/>'});
-            }
+          .on('click3',function(event) {
+            event.stopPropagation();
+            showEventMessage.call(this, {eventType: event.type});
+            $(this).addClass('hightlight');
           });
     });
   </script>
