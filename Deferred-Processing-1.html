@@ -15,17 +15,22 @@
   </body>
   <script>
     $(function() {
+
+      var loadSection = function(options) {
+        if(typeof options !== 'object')
+          options = {};
+          options.selector = options.selector || '';
+          options.url = options.url || '';
+          return $.get(options.url,function(result) {
+            $(options.selector).html(result);
+          },'html');
+      };
+
       $('#Load').click(function(event) {
         $.when(
-          $.get('Content-1.html',function(result) {
-            $('#Section1').html(result);
-          },'html'),
-          $.get('Content-2.html',function(result) {
-            $('#Section2').html(result);
-          },'html'),
-          $.get('Content-3.html',function(result) {
-            $('#Section3').html(result);
-          },'html')
+          loadSection({url: "Content-1.html", selector: '#Section1'}),
+          loadSection({url: "Content-2.html", selector: '#Section2'}),
+          loadSection({url: "Content-3.html", selector: '#Section3'})
         )
         .then(function() {
           $('#Proceed').removeAttr('disabled');
