@@ -34,9 +34,10 @@
         )
         .then(function() {
           $('#Proceed').removeAttr('disabled');
-        },function(result) {
+        })
+        .fail(function(result) {
           $('#Messages').append('Failure!<br/>').append('Result: '+result.statusText+'<br/>')
-        });
+        })
       });
     });
   </script>
