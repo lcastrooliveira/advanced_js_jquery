@@ -6,7 +6,8 @@
     setTimeout(function(){
       $('#Content1')
         .append('<hr/>')
-        .append('more content loaded dynamically');
-    },2000);
-  })
+        .append('more content loaded dynamically')
+        .trigger('complete');
+    },5000);
+  });
 </script>
