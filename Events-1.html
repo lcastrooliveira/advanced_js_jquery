@@ -34,6 +34,20 @@
             var message = options.eventType+':'+(options.eventTarget.nodeName || 'unknown') + options.suffix;
             $('#Messages').append(message);
           },
+          internalObject = {records: [], maxCount: 5},
+          loadRecord = function() {
+            var id = internalObject.records.length;
+            if(id < internalObject.maxCount) {
+              internalObject.records.push(
+                {'description':'Record id'+id,
+                 value: Math.floor(Math.random()*5000)
+                }
+              );
+              setTimeout(loadRecord,Math.floor(Math.random() * 1000));
+            } else {
+              $(internalObject).trigger('recordsloaded');
+            }
+          },
           namedHandler = function(event)
           {
             if(!event.isPropagationStopped() &&
@@ -51,11 +65,20 @@
             showEventMessage.call(this, {eventType: ''+clickCount + ')'+ event.type});
             if(clickCount === 3)
               $this.trigger('click3');
+            if($this.attr('type') === 'button')
+              loadRecord();
           })
           .on('click3',function(event) {
             event.stopPropagation();
             showEventMessage.call(this, {eventType: event.type});
             $(this).addClass('hightlight');
+          });
+        $(internalObject)
+          .on('recordsloaded', function(event) {
+            showEventMessage.call(this, {eventType: event.type});
+            $.each(internalObject.records,function() {
+              $('#Messages').append(' -- ' + this.description + ':' + this.value + '<br/>');
+            });
           });
     });
   </script>
