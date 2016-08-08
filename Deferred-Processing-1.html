@@ -28,13 +28,15 @@
 
       $('#Load').click(function(event) {
         $.when(
-          loadSection({url: "Content-1.html", selector: '#Section1'}),
+          loadSection({url: "Content-11.html", selector: '#Section1'}),
           loadSection({url: "Content-2.html", selector: '#Section2'}),
           loadSection({url: "Content-3.html", selector: '#Section3'})
         )
         .then(function() {
           $('#Proceed').removeAttr('disabled');
-        })
+        },function(result) {
+          $('#Messages').append('Failure!<br/>').append('Result: '+result.statusText+'<br/>')
+        });
       });
     });
   </script>
